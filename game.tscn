@@ -1,10 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://no4ygap1wkgd"]
+[gd_scene load_steps=19 format=3 uid="uid://no4ygap1wkgd"]
 
-[ext_resource type="Texture2D" uid="uid://do0j7020e3t6a" path="res://sprites/cavetile2.png" id="1_gosdv"]
-[ext_resource type="Texture2D" uid="uid://ducw4spyqeixh" path="res://sprites/cavetile3.png" id="2_u4j40"]
-[ext_resource type="Texture2D" uid="uid://dxqrsaf5nqqxu" path="res://sprites/cavetile1.png" id="3_7cvlg"]
-[ext_resource type="Texture2D" uid="uid://bxlreye3k6tlq" path="res://icon.svg" id="4_1yxgs"]
+[ext_resource type="Texture2D" uid="uid://c4ufqmte73wj4" path="res://sprites/cavetile2.png" id="1_gosdv"]
+[ext_resource type="Texture2D" uid="uid://6yqtkufjhmmw" path="res://sprites/cavetile3.png" id="2_u4j40"]
+[ext_resource type="Texture2D" uid="uid://f5le0awt22jp" path="res://sprites/cavetile1.png" id="3_7cvlg"]
+[ext_resource type="Texture2D" uid="uid://dxfxs4ughfug8" path="res://icon.svg" id="4_1yxgs"]
 [ext_resource type="Script" path="res://Player.gd" id="4_uhswg"]
+[ext_resource type="Texture2D" uid="uid://bppswv8qvwkb4" path="res://sprites/LlamaPC2.png" id="6_eqiny"]
+[ext_resource type="Script" path="res://OllamaPC.gd" id="6_tiqqt"]
+[ext_resource type="Texture2D" uid="uid://c0xp5wuddrloh" path="res://sprites/LlamaPC1.png" id="7_g4pj2"]
+[ext_resource type="Texture2D" uid="uid://bfsx88wh636gm" path="res://sprites/LlamaPC3.png" id="8_rf1ey"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_epj1y"]
 texture = ExtResource("1_gosdv")
@@ -12,6 +16,7 @@ texture_region_size = Vector2i(25, 25)
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12.5, -12.5, 12.5, -12.5, 12.5, 12.5, -12.5, 12.5)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a38nb"]
 texture = ExtResource("2_u4j40")
@@ -19,6 +24,7 @@ texture_region_size = Vector2i(25, 25)
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12.5, -12.5, 12.5, -12.5, 12.5, 12.5, -12.5, 12.5)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ydkom"]
 texture = ExtResource("3_7cvlg")
@@ -26,11 +32,11 @@ texture_region_size = Vector2i(25, 25)
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12.5, -12.5, 12.5, -12.5, 12.5, 12.5, -12.5, 12.5)
 
 [sub_resource type="TileSet" id="TileSet_e6rs6"]
 tile_size = Vector2i(25, 25)
 physics_layer_0/collision_layer = 1
-physics_layer_0/collision_mask = 2
 sources/3 = SubResource("TileSetAtlasSource_epj1y")
 sources/4 = SubResource("TileSetAtlasSource_a38nb")
 sources/5 = SubResource("TileSetAtlasSource_ydkom")
@@ -46,16 +52,59 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cmnif"]
+size = Vector2(26, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2enwj"]
+size = Vector2(6, 6)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ri5f8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_rf1ey")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_eqiny")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_eqiny")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_g4pj2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_eqiny")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_g4pj2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_rf1ey")
+}],
+"loop": true,
+"name": &"talk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rr8tq"]
+size = Vector2(22, 23)
+
 [node name="Node2D" type="Node2D"]
 
 [node name="GroundTileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_e6rs6")
 format = 2
-layer_0/tile_data = PackedInt32Array(0, 3, 0, 4, 4, 0, 5, 3, 0, 6, 5, 0, 1, 4, 0, 2, 5, 0, 3, 4, 0)
+layer_0/tile_data = PackedInt32Array(0, 3, 0, 4, 4, 0, 5, 3, 0, 6, 5, 0, 2, 5, 0, 3, 4, 0, 1, 3, 0)
 
 [node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(38, -32)
-collision_layer = 2
+z_index = 1
+position = Vector2(30, -32)
 script = ExtResource("4_uhswg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
@@ -66,7 +115,26 @@ sprite_frames = SubResource("SpriteFrames_2u5ya")
 zoom = Vector2(3, 3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_cmnif")
 
-[node name="OllamaPC" type="StaticBody2D" parent="."]
+[node name="ActBox" type="Area2D" parent="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/ActBox"]
+shape = SubResource("RectangleShape2D_2enwj")
+debug_color = Color(0.886275, 0.329412, 0.0196078, 0.419608)
+
+[node name="OllamaPC" type="Area2D" parent="."]
+z_index = -1
+position = Vector2(160, -12)
+script = ExtResource("6_tiqqt")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="OllamaPC"]
+sprite_frames = SubResource("SpriteFrames_ri5f8")
+frame_progress = 0.856942
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OllamaPC"]
+position = Vector2(-1, 0.5)
+shape = SubResource("RectangleShape2D_rr8tq")
+
+[connection signal="talk" from="Player" to="OllamaPC" method="_on_player_talk"]
+[connection signal="area_entered" from="OllamaPC" to="Player" method="_on_ollama_pc_area_entered"]
