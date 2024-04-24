@@ -2,14 +2,13 @@ extends Area2D
 
 var http_request
 const URL = "http://127.0.0.1:11434/api/generate"
-var ollama_context = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	http_request = HTTPRequest.new()
 	add_child(http_request)
 	http_request.request_completed.connect(self._on_request_completed)
-	var body = JSON.stringify({"model": "qwen:0.5b"})
+	var body = JSON.stringify({"model": "MistralPC"})
 	http_request.request(URL, [], HTTPClient.METHOD_POST, body)
 	get_node("AnimatedSprite2D").play("default")
 
